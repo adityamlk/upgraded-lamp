@@ -1,0 +1,13 @@
+### IntelliJ IDEA ###
+.idea
+PersonalCodeLibrary.iml
+
+### Gradle ###
+.gradle
+build
+gradle
+gradlew
+gradlew.bat
+
+### Mac OS ###
+.DS_Store

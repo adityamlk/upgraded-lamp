@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
  * the tree maintains the minimal element on the top.
  * <p>
  * Insertion is O(logN); inserts to the end of the tree and bubbles up the minimum element.
- * Deletion is O(logN); removes from the end of the tree and bubbles down the value.
+ * Deletion is O(logN); removes from the top of the tree, replaces with left-most value, and bubbles down the value.
  * Search is O(N) since exact place of the node is not guaranteed, which means traversing all nodes may be necessary.
  *
  * @param <T> Generic data type supported by the tree.
@@ -59,6 +59,9 @@ public class MyMinHeap<T extends Comparable<T>> {
 
         int currentIndex = size - 1;
 
+        // After inserting to the end of the heap bubble up this value by comparing against the parent. If the value is
+        // smaller, then replace with the parent and repeat the check. This will ensure the smallest value is at the top
+        // of the heap and each sub-heap.
         while (0 != currentIndex) {
             final T currentValue = (T) internalCollection[currentIndex];
             final int parentIndex = getParentIndex(currentIndex);
@@ -84,11 +87,15 @@ public class MyMinHeap<T extends Comparable<T>> {
         final T valueToExtract = (T) internalCollection[0];
         size -= 1;
 
+        // Replace the top of the heap with the last value in the heap and mark this last value as null.
         final T valueToReplace = (T) internalCollection[size];
         internalCollection[0] = valueToReplace;
         internalCollection[size] = null;
         int currentIndex = 0;
 
+        // After replacing the top of the heap bubble down this value by comparing against either the left or right
+        // child. Repeat until the value cannot move further down. This will ensure the smallest value remains at the
+        // top of the heap and at each sub-heap.
         while (currentIndex < size) {
             final int leftChildIndex = getLeftChildIndex(currentIndex);
             final int rightChildIndex = getRightChildIndex(currentIndex);
@@ -97,6 +104,9 @@ public class MyMinHeap<T extends Comparable<T>> {
             T valueToSwap;
             int valueToSwapIndex;
 
+            // Three options: (1) if neither child exists, stop bubbling, (2) if left or right child exists, then check
+            // whether to swap with that child, and (3) if both children exist, then find the smaller of the two and
+            // check whether to swap with the child.
             if (null == leftChildValue && null == rightChildValue) {
                 break;
             } else if (null != leftChildValue && null == rightChildValue) {
@@ -114,6 +124,8 @@ public class MyMinHeap<T extends Comparable<T>> {
 
             final boolean didPerformSwap = swapIfLessThan(valueToSwap, valueToSwapIndex, valueToReplace, currentIndex);
 
+            // If there wasn't a swap, then bubbling can stop. Otherwise, continue with the next index the value moved
+            // to.
             if (!didPerformSwap) {
                 break;
             }
@@ -139,6 +151,10 @@ public class MyMinHeap<T extends Comparable<T>> {
         final Queue<Integer> searchQueue = new LinkedList<>();
         searchQueue.add(0);
 
+        // Performs Breadth-First Search (BFS) to check whether the given value is in the tree. Checks one level at a
+        // time in the heap. If the value is greater than an entry in the heap, then adds the children to the queue for
+        // processing. If not, then ignores the sub-heap entirely. Stops once matched value found, continues to the end
+        // otherwise.
         while (!searchQueue.isEmpty()) {
             final int currentIndex = searchQueue.poll();
             final T currentValue = (T) internalCollection[currentIndex];

@@ -38,6 +38,9 @@ public class MyMinHeap<T extends Comparable<T>> {
      */
     private Object[] internalCollection;
 
+    /**
+     * Default Constructor.
+     */
     public MyMinHeap() {
         this.internalCollection = new Object[DEFAULT_INITIAL_CAPACITY];
         this.size = 0;

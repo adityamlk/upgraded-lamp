@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,6 +35,7 @@ public class MyBinarySearchTree<T extends Comparable<T>> {
     /*
      * Pointer to the head of the structure.
      */
+    @Getter
     private BSTNode<T> root;
 
     /**

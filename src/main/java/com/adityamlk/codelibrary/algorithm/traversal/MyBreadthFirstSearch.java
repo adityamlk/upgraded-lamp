@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
  * <p>
  * Traversal is O(N) since all nodes may require a visit.
  *
- * @param <T> Generic data type supported by the tree.
+ * @param <T> Generic data type supported by the graph.
  */
 @Log4j2
 @NoArgsConstructor

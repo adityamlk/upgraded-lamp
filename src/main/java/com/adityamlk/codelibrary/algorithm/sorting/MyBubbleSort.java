@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j2;
 public class MyBubbleSort<T extends Comparable<T>> {
 
     /**
-     * Sorts the provided list, in-order, using Bubble Sort approach. Uses built-in comparison implementation of the
+     * Sorts the provided list, in-place, using Bubble Sort approach. Uses built-in comparison implementation of the
      * type to compare one value with the next.
      *
      * @param listToSort List to sort.

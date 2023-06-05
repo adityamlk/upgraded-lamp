@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j2;
 public class MySelectionSort<T extends Comparable<T>> {
 
     /**
-     * Sorts the provided list, in-order, using Selection Sort approach. Uses built-in comparison implementation of the
+     * Sorts the provided list, in-place, using Selection Sort approach. Uses built-in comparison implementation of the
      * type to compare one value with the next.
      *
      * @param listToSort List to sort.
@@ -48,12 +48,20 @@ public class MySelectionSort<T extends Comparable<T>> {
 
             // Only swap if the indices are different.
             if (swapIndex != largestIndex) {
-                final T tempValue = listToSort.get(largestIndex);
-                listToSort.set(largestIndex, listToSort.get(swapIndex));
-                listToSort.set(swapIndex, tempValue);
+                swapElements(listToSort, largestIndex, swapIndex);
             }
         }
 
         return listToSort;
+    }
+
+    /*
+     * Swaps two elements in the provided list based on the two indices provided. Swap is in-place and modifies the
+     * list.
+     */
+    private void swapElements(final List<T> listToSort, final int firstIndex, final int secondIndex) {
+        final T tempValue = listToSort.get(firstIndex);
+        listToSort.set(firstIndex, listToSort.get(secondIndex));
+        listToSort.set(secondIndex, tempValue);
     }
 }
